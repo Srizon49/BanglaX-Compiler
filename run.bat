@@ -10,7 +10,7 @@ echo.
 
 if not exist out mkdir out
 
-powershell -NoProfile -Command "javac -encoding UTF-8 -d out (Get-ChildItem src -Recurse -Filter *.java | Where-Object { $_.Name -ne 'LexerTest.Java' } | ForEach-Object { $_.FullName })"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$files = Get-ChildItem 'src' -Recurse -Filter '*.java' | Where-Object { $_.Name -ne 'LexerTest.Java' } | ForEach-Object { $_.FullName }; if ($files) { javac -encoding UTF-8 -d out $files } else { exit 1 }"
 
 if errorlevel 1 (
     echo.
